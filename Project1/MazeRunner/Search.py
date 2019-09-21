@@ -156,7 +156,52 @@ def A_star_Euc(Maze):
 
 
 def A_star_Man(Maze):
-    pass
+    dim = len(Maze)
+    open_pq = queue.PriorityQueue()
+    close = list()
+    cur = [0, 0]
+    goal = [dim - 1, dim - 1]
+    open_pq.put((euc_heuristc(cur, goal), [0, 0]))
+    parent = dict()
+    while open_pq.qsize() > 0:
+        cur = open_pq.get()[1]
+        close.append(copy.deepcopy(cur))
+        i, j = cur[0], cur[1]
+        if cur == goal:
+            break
+        if j + 1 < dim and Maze[i][j + 1] != 1:
+            flag = find_priority([i, j + 1], open_pq)
+            if [i, j + 1] not in close and not flag:
+                parent[i, j + 1] = [i, j]
+                hx = 1 + man_heuristc([i, j + 1], goal)
+                gx = track_cost([i, j + 1], parent)
+                open_pq.put((hx + gx, [i, j + 1]))
+        if i + 1 < dim and Maze[i + 1][j] != 1:
+            flag = find_priority([i + 1, j], open_pq)
+            if [i + 1, j] not in close and not flag:
+                parent[i + 1, j] = [i, j]
+                hx = 1 + man_heuristc([i + 1, j], goal)
+                gx = track_cost([i + 1, j], parent)
+                open_pq.put((hx + gx, [i + 1, j]))
+        if j - 1 >= 0 and Maze[i][j - 1] != 1:
+            flag = find_priority([i, j - 1], open_pq)
+            if [i, j - 1] not in close and not flag:
+                parent[i, j - 1] = [i, j]
+                hx = 1 + man_heuristc([i, j - 1], goal)
+                gx = track_cost([i, j - 1], parent)
+                open_pq.put((hx + gx, [i, j - 1]))
+        if i - 1 >= 0 and Maze[i - 1][j] != 1:
+            flag = find_priority([i - 1, j], open_pq)
+            if [i - 1, j] not in close and not flag:
+                parent[i - 1, j] = [i, j]
+                hx = 1 + man_heuristc([i - 1, j], goal)
+                gx = track_cost([i - 1, j], parent)
+                open_pq.put((hx + gx, [i - 1, j]))
+    if tuple(goal) in parent.keys():
+        path = track_path(goal, parent)
+        return path
+    else:
+        return []
 
 
 def euc_heuristc(current_state, goal_state):
@@ -166,7 +211,7 @@ def euc_heuristc(current_state, goal_state):
 
 def man_heuristc(current_state, goal_state):
     d = abs(goal_state[0] - current_state[0]) + abs(goal_state[1] - current_state[1])
-
+    return d
 
 def track_cost(current, parent):
     i = 0

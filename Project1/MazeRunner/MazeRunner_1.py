@@ -4,14 +4,18 @@ import copy
 import time
 
 maze_generater = Maze.Maze_generater()
+i = 0
 B = 0
 D = 0
 AE = 0
-time_start = time.time()
-print(time_start)
+
+# print(time_start)
+
 
 while B == 0:
-    maze = maze_generater(1000, 0.35)
+    # print("<", 30*"=", ">", file=a.log)
+    # i = i + 1
+    maze = maze_generater(90, 0.35)
     maze_copy = copy.deepcopy(maze)
     BP = Search.BFS(maze_copy)
     B = len(BP)
@@ -19,16 +23,20 @@ while B == 0:
     DP = Search.DFS(maze_copy)
     D = len(DP)
     maze_copy = copy.deepcopy(maze)
-    AEP = Search.A_star_Euc(maze_copy)
+    time_start = time.time()
+    AEP = Search.A_star_Man(maze_copy)
     AE = len(AEP)
+    if len(DP) > 0:
+        print(D)
+        print(B)
+        print(AE)
+        print(time.time() - time_start)
+    # print(i)
 # print(maze)
 # print(D, '/t', DP)
 # print(B, '/t', BP)
 # print(AE, '/t', AEP)
-print(D)
-print(B)
-print(AE)
-print(time.time() - time_start)
+
 
 # while True:
 #
