@@ -15,7 +15,7 @@ AE = 0
 while B == 0:
     # print("<", 30*"=", ">", file=a.log)
     # i = i + 1
-    maze = maze_generater(90, 0.35)
+    maze = maze_generater(500, 0.35)
     maze_copy = copy.deepcopy(maze)
     BP = Search.BFS(maze_copy)
     B = len(BP)
@@ -23,14 +23,22 @@ while B == 0:
     DP = Search.DFS(maze_copy)
     D = len(DP)
     maze_copy = copy.deepcopy(maze)
-    time_start = time.time()
-    AEP = Search.A_star_Man(maze_copy)
+    time_start_1 = time.time()
+    AEP = Search.A_star_Euc(maze_copy)
     AE = len(AEP)
+    time_AE = time.time() - time_start_1
+    maze_copy = copy.deepcopy(maze)
+    time_start_2 = time.time()
+    AMP = Search.A_star_Man(maze_copy)
+    AM = len(AMP)
+    time_AM = time.time() - time_start_2
     if len(DP) > 0:
         print(D)
         print(B)
         print(AE)
-        print(time.time() - time_start)
+        print(AM)
+        print("AE: ", time_AE)
+        print("AM: ", time_AM)
     # print(i)
 # print(maze)
 # print(D, '/t', DP)
