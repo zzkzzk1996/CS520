@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import time
 
+standardDir = np.array([[-1,0], [0,-1], [0,1], [1,0]])
 # ======================================================================================
 # FUNCTIONS
 # **********
@@ -149,51 +150,68 @@ def simple_weight_init(size, origin = [1,1]):
 
 # --------------------------------------------------------
 
-def path_planning(maze, strategy = "DFS", distFunction = 'euclidean', tryAll = False, verbose = False):
+def path_planning(maze, plan = "DFS", distFunction = 'euclidean', tryAll = False, verbose = True):
     """ Description: This function will call the appropriate path discovery function
                      and will return the solution, if any.
 
         ARGUMENTS:   maze (np array)-> Array representation of maze. [0,1]
-                     strategy (string)-> Selector of the path discovery strategy.
+                     strategy (string or lsit)-> Selector of the path discovery strategy. If a list is given, all
+                     the algortihms in the list will be run. 
+                     Options : BFS,DFS, A_star, Bi-Directional.
+
                      distFunction (function type)-> Selector of the distance function for A* algorithm.
                      It is a function name which is then used to provide the heuristic distance towards the goal.
                      Default is Euclidean: d = sqrt(x^2+y^2).
 
-        RETURNS:     path (list)->Traversal path. Empty if None.
+                     tryAll (boolean)-> If this flag is set all algorithms will be run.
+                     Verbose (boolean)-> Set this flag to enable printouts.
+
+        RETURNS:     path (list of lists)-> List that holds all the computed Traversal paths. Empty if None.
     """
     existList = []
     pathsList = []
-    if strategy == "BFS"or tryAll:
-        if verbose:
-            print("Perform BFS")
-        exists, path = BFS(maze)
-        existList.append(exists)
-        pathsList.append(path)
-
-    if strategy == "DFS" or tryAll:
-        if verbose:
-            print("Perform DFS")
-        exists, path = DFS(maze)
-        existList.append(exists)
-        pathsList.append(path)
-
-    if strategy == "A*"or tryAll:
-        distFunctions = [manhattan_dist, euclidean_dist]
-        if not tryAll:
-            distFunctions = [distFunctions[0] if distFunction=='manhattan' else distFunctions[1]]
-        for i in range(len(distFunctions)):
+    args = []
+    # Turn input into list soo we can iterate over it.
+    if type(plan) != list:
+        strategy = [plan]
+    if type(plan) == dict:
+        args = plan['args']
+        strategy = plan['strategies']
+    # For any given strategy, run the appropriate algorithm. If tryAll is given all algos will be run.
+    for i, s in enumerate(strategy):
+        if s == "BFS"or tryAll:
             if verbose:
-                print("Perform A* with distance function: {}".format(distFunctions[i])) # This is how you print onto screen. Also this how you get the type of a variable
-            exists, path = A_star(maze, distFunction=distFunctions[i])
+                print("Perform BFS")
+            exists, path = BFS(maze)
             existList.append(exists)
             pathsList.append(path)
 
-    if strategy == "Bi-Directional"or tryAll:
-        if verbose:
-            print("Perform Bi-Directional BFS")
-        exists, path = Bi_directional_BFS(maze)
-        existList.append(exists)
-        pathsList.append(path)
+        if s == "DFS" or tryAll:
+            if verbose:
+                print("Perform DFS")
+            searchDir = args[i] if i < len(args) else standardDir
+            exists, path = DFS(maze, searchDir = searchDir)
+            existList.append(exists)
+            pathsList.append(path)
+
+        if s == "A*"or tryAll:
+            distFunctions = [manhattan_dist, euclidean_dist]
+            distFunction = args[i] if i < len(args) else distFunction
+            if not tryAll:
+                distFunctions = [distFunctions[0] if distFunction=='manhattan' else distFunctions[1]]
+            for i in range(len(distFunctions)):
+                if verbose:
+                    print("Perform A* with distance function: {}".format(distFunctions[i])) # This is how you print onto screen. Also this how you get the type of a variable
+                exists, path = A_star(maze, distFunction=distFunctions[i])
+                existList.append(exists)
+                pathsList.append(path)
+
+        if s == "Bi-Directional"or tryAll:
+            if verbose:
+                print("Perform Bi-Directional BFS")
+            exists, path = Bi_directional_BFS(maze)
+            existList.append(exists)
+            pathsList.append(path)
 
 
     for i, exists in enumerate(existList):
@@ -234,7 +252,7 @@ def BFS(maze):
         curNode = nodeQ.get()
         # Transloate coords to original space and Append Node to traversal path!
         path.append([curNode[0]-1, curNode[1]-1])
-        print("Current Node: "+str(curNode))
+        # print("Current Node: "+str(curNode))
 
         # Check all neighbors part.
         # ***
@@ -273,7 +291,7 @@ def BFS(maze):
     return 0, path
 # --------------------------------------------------------
 
-def DFS(maze):
+def DFS(maze, searchDir = standardDir):
     """ DESCRIPTION: This function will perform DFS to see if the maze has a solution
         ARGUMENTS: maze-> (numpy array) The table representation of thr maze
 
@@ -300,12 +318,13 @@ def DFS(maze):
 
         # Pop the next node in queue (one discovered for the longest time)
         curNode = nodeQ.get()
-        print("Current Node: "+str(curNode))
+        # print("Current Node: "+str(curNode))
 
         x, y = curNode[0], curNode[1]
         # Translate to original unpadded coord space and Append Node to traversal path!
         path.append([x-1,y-1])
-        nodeSel = np.array([[-1,0], [0,-1], [0,1], [1,0]])    # select array. Select nodes UP, LEFT, RIGHT, DOWN.
+        # nodeSel = np.array([[-1,0], [0,-1], [0,1], [1,0]])    # select array. Select nodes UP, LEFT, RIGHT, DOWN.
+        nodeSel = searchDir
         # Check UP-LEFT_RIGHT_DOWN neighbors part.
         # ***
         # We dont need to corner check as we use a larger maze that has been padded with 1's. In essence
@@ -314,7 +333,7 @@ def DFS(maze):
             # Get coords of neighbor and its occupancy value.
             x, y = n[0]+curNode[0], n[1]+curNode[1]
             nValue = pMaze[x,y]
-            print("Neighbor: ", x,y, nValue)
+            # print("Neighbor: ", x,y, nValue)
 
             # If the neighbor is the goal return
             if x == mSize and y == mSize:
@@ -418,16 +437,97 @@ def A_star(maze, distFunction = euclidean_dist()):
     return 0, path
 
 # --------------------------------------------------------
-def Bi_directional_BFS(maze):
+def Bi_directional_BFS(maze,verbose = False):
     """ DESCRIPTION: This function will perform Bi-Directional BFS to see if the maze has a solution
         ARGUMENTS: maze-> (numpy array) The table representation of thr maze
 
         RETURNS: path-> (list of tuples) This is a list of tuples containing the  traversal.
                  Each item is a tuple that contains the coordinates of each step in the form (x_i,y_i).
     """
-    path = []
+    # Initialize variables
+    path  = []                            # List that holds the path fro mthe top left direction.
+    path2 = []                            # List that holds the path from the bottom right direction.
+    pMaze = pad_maze(maze)                # padded maze. A larger Maze that has 1's on borders to avoid corer checking.
+    discoveryMap = np.zeros(pMaze.shape)  # np array that marks which nodes have already been discovered
+    visitMap  = np.zeros(pMaze.shape)      # np array that holds the visit sequence
+    visitMap2 = np.zeros(pMaze.shape)      # np array that holds the visit sequence
+    mSize = maze.shape[0]                 # Size of original maze.
+    nodeQ = queue.Queue()                 # FIFO queue to store discovered neighbors.
+    nodeQ2 = queue.Queue()                # FIFO queue to store discovered neighbors, from the bottom right direction.
+    goalReached, cnt = 0,0
+    # Start one direction at 0.0
+    curNode = [1,1]
+    discoveryMap[1,1] = 1
+    # Start the other direction at end,end
+    curNode2 = [mSize,mSize]
+    discoveryMap[mSize,mSize] = 1
+    # Place start nodes in their queues.
+    nodeQ.put(curNode)
+    nodeQ2.put(curNode2)
 
-    return 0, path
+    # If doth queues are empty stop.
+    while not nodeQ.empty() and not nodeQ2.empty():
+
+        # Pop the next node in queue (one discovered for the longest time), from both directions
+        curNode  = nodeQ.get()
+        curNode2 = nodeQ2.get()
+        # Mark the node as visited!
+        visitMap[curNode[0],  curNode[1]]  = 1
+        visitMap2[curNode2[0], curNode2[1]] = 1
+        # Append Node to traversal path! We need to translate it to the original coord frame first.
+        path.append([curNode[0]-1, curNode[1]-1])
+        path2.append([curNode2[0]-1, curNode2[1]-1])
+        if verbose:
+            print("Current Top Left Node: "+str(curNode)+ "Current Bottom Right Node: " + str(curNode2))
+
+        # Check all neighbors part.
+        # ***
+        # We dont need to corner check as we use a larger maze that has been padded with 1's. In essence
+        # We trade off memory for speed!
+        nodeSel  = -np.array([[-1,0], [0,-1], [0,1], [1,0]])    # select array. Select nodes UP, LEFT, RIGHT, DOWN.
+        nodeSel2 = -nodeSel                                    # select array. Select nodes UP, LEFT, RIGHT, DOWN.
+        for n,n2 in zip(nodeSel,nodeSel2):
+            # Get coords of neighbor and its occupancy value.
+            nX, nY = n[0]+curNode[0], n[1]+curNode[1]
+            nX2, nY2 = n2[0]+curNode2[0], n2[1]+curNode2[1]
+            nValue = pMaze[nX,nY]
+            nValue2 = pMaze[nX2,nY2]
+            # print("Neighbor: ", nX, nY, nValue)
+            if (nValue != 1) and (nValue2 !=1):
+                if (nX == nX2 and nY == nY2) or (visitMap[nX2,nY2] == 1) or (visitMap2[nX, nY] ==1):
+                    print(" The two directions MET at {},{} !!\nGoal Reached after exploring {} nodes! {} {}".format(nX-1,nY-1, cnt+1, len(path), len(path2))) # It is easier to print meeting p at orgi coords
+                    path = path + path2[::-1] # Reverse path2, This is because the last node in path2 is the last one visited, the one that the two paths met.  List + concates lists at their left size
+                    if verbose:
+                        print(path)
+                    return 1, path
+                # If the neighbor is the goal return.
+                if (nX == mSize and nY == mSize) or (nX2 == 1 and nY2 == 1):
+                    print("Goal Reached after exploring {} nodes! {}".format(cnt+1))
+                    path.append([mSize-1,mSize-1]) # Append the goal, which is always point (mSize,mSize) or (end,end) to the path.
+                    return 1, path
+            # Bussiness Logic
+            # ***
+            # Check to see in neighbor is not occupied. Avoid unnessacary computations!
+            if nValue != 1:
+                # Check the following: 1) If this neighbor is empty. 2) If this empty neighbor has not been visited. 
+                if (discoveryMap[nX, nY] != 1):
+                    # print(x,y,x_orig,y_orig,neighbors, discoveryMap) # Sanity print
+                    discoveryMap[nX, nY] = 1      # Mark this node as discovered. No  other node should push this node again to the queue.
+                    entryNode = [nX, nY]            # Form the coordinates of this node, in padded image coordinate frame.
+                    nodeQ.put(entryNode)
+            if nValue2 != 1:
+                # Check the following: 1) If this neighbor is empty. 2) If this empty neighbor has not been visited. 
+                if (discoveryMap[nX2, nY2] != 1):
+                    # print(x,y,x_orig,y_orig,neighbors, discoveryMap) # Sanity print
+                    discoveryMap[nX2, nY2] = 1      # Mark this node as discovered. No  other node should push this node again to the queue.
+                    entryNode = [nX2, nY2]            # Form the coordinates of this node, in padded image coordinate frame.
+                    nodeQ2.put(entryNode)
+        #---|
+        cnt += 1 # Count the steps it took to find a solution!
+
+    # If we reach this point no path exists. return 0 for failure and attempted path. THe path is the joined paths(the bottom right one get reversed, makes
+    # printing later one easier)
+    return 0, path+path2[::-1]
 
 # --------------------------------------------------------
 
@@ -455,7 +555,7 @@ def main():
     # But if no inputs are given, the default values listed will be used!
     parser = argparse.ArgumentParser(prog='Maze Exploration!')
     # Tell parser to accept the following arguments, along with default vals.
-    parser.add_argument('--part', type = int,  metavar = 'dim', default=1,    help="Which part of the assignment to tackle")
+    parser.add_argument('--part', type = str,  metavar = 'dim', default=1,    help="Which part of the assignment to tackle")
     parser.add_argument('--dim', type = int,   metavar = 'dim', default=8,    help="Maze dimension. Maze is Square.")
     parser.add_argument('--p',   type = float, metavar = 'p',   default=0.2,  help="Occupancy probability, per cell.")
     parser.add_argument('--s',   type = str,   metavar = 's',   default='BFS',help="Exploration Strategy. Options: DFS,BFS,A*")
@@ -483,7 +583,7 @@ def main():
         # Time execution. We can use this to find a large enough dimension. The graph is fully connceted so complexity
         # is O(n^2).
         startTime = time.time()
-        existList, pathsList = path_planning(maze, strategy = args.s, distFunction=dist, tryAll=args.all)
+        existList, pathsList = path_planning(maze, plan = args.s, distFunction=dist, tryAll=args.all)
         execTime = time.time() - startTime
         print("--- %s seconds ---" % (execTime))
         # Visualize traversal on maze.
@@ -494,29 +594,70 @@ def main():
             draw_path_on_maze_img(cMazeImg, pathsList[i],label = labels[i])
     # PART 2
     # *******
-    if args.part == 2:
-        # Plot p vs solvability
-        trials = args.trials
-        pathsList = []
-        successes = 0
-        probs = np.arange(0.05, 0.7, 0.05)
-        successList = []
-        for i, p in enumerate(probs): 
-            for j in range(trials):
-                maze = create_maze(args.dim, p)
-                dist = 'eucludian' if args.d is '0' else args.d
-                exists, path = path_planning(maze, strategy = args.s, distFunction=dist, tryAll=args.all)
-                successes += exists[0]
-            successList.append(successes/trials)
-            successes = 0
-        # Plot the suc vs occupanncy prob plot!
-        plt.plot(probs, successList)              
-        plt.title("Success vs Occupancy Plot, dims = {}, trials = {}".format(args.dim, trials)) # plot format
-        plt.ylabel("Success probability s")     # name y axis
-        plt.xlabel("Occupancy propability p")   # name x axis
-        plt.savefig('Success_vs_occupancy.png') # save figure at the same folder as code
-        # ---|
-        
+    if '2' in args.part:
+        if 'c' in args.part:
+            # Plot p vs solvability
+            trials = args.trials
+            pathsList = []
+            successes = [0, 0, 0 ,0 ,0]
+            labels = ["BFS", "DFS", "A_star_manhattan", "A_star_euclidean", "Bi_directional_BFS"]
+            probs = np.arange(0.05, 0.7, 0.05)
+            successList = [[]for i in range(5)]
+            for i, p in enumerate(probs): 
+                for j in range(trials):
+                    print("Trial: {} for p: {}".format(j+1, p))
+                    maze = create_maze(args.dim, p)
+                    dist = 'eucludian' if args.d is '0' else args.d
+                    exists, path = path_planning(maze, plan = args.s, distFunction=dist, tryAll=True)
+                    # Store for all algorithms if they succeed or not.
+                    for s in range(5):
+                        successes[s] += exists[s]
+                for s in range(5):
+                    successList[s].append(successes[s]/trials)
+                    successes[s] = 0
+            for s in range(5):
+                # Plot the suc vs occupanncy prob plot!
+                plt.plot(probs, successList[s])              
+                plt.title("{}: Success vs Occupancy Plot, dims = {}, trials = {}".format(labels[s], args.dim, trials)) # plot format
+                plt.ylabel("Success probability s")     # name y axis
+                plt.xlabel("Occupancy propability p")   # name x axis
+                plt.savefig('{}_Success_vs_occupancy_dim_{}_trials_{}.png'.format(labels[s], args.dim, trials)) # save figure at the same folder as code
+                plt.close()
+            # ---|
+        # Bullet g or 7
+        if 'g' in args.part:
+            # Generate map
+            mapDim     = args.dim
+            occupyProb = args.p
+            maze = create_maze(mapDim, occupyProb)
+            # Visualize map, save it and hold in mazeImg to use it for drawing the path on.
+            mazeImg =draw_maze(maze)
+            # ---|
+            # Evaluate looking towards the goal vs the opposite way.
+            plan = {'strategies':['DFS', 'DFS'], 'args': [np.array([[-1,0], [0,-1], [0,1], [1,0]]), -np.array([[-1,0], [0,-1], [0,1], [1,0]])]}
+            existList, pathsList = path_planning(maze, plan = plan)
+            labels = ["DFS_towards_goal", "DFS_towards_opposite_of_goal"] 
+            for i in range(len(existList)):
+                cMazeImg = mazeImg.copy()
+                draw_path_on_maze_img(cMazeImg, pathsList[i],label = labels[i])
+        # Bullet h or 8
+        if 'h' in args.part:
+            # Generate map
+            mapDim     = args.dim
+            occupyProb = args.p
+            maze = create_maze(mapDim, occupyProb)
+            # Visualize map, save it and hold in mazeImg to use it for drawing the path on.
+            mazeImg =draw_maze(maze)
+            # ---|
+            # Evaluate looking towards the goal vs the opposite way.
+            plan = {'strategies':['Bi-Directional', 'A*'], 'args': [np.array([[-1,0], [0,-1], [0,1], [1,0]]), 'manhattan']}
+            existList, pathsList = path_planning(maze, plan = plan)
+            labels = ["Bi-Directional_h", "A_star_manhttan_h"] 
+            for i in range(len(existList)):
+                cMazeImg = mazeImg.copy()
+                draw_path_on_maze_img(cMazeImg, pathsList[i],label = labels[i])
+
+
     # PART 3
     # *******
 
