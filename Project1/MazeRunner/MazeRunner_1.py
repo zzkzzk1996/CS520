@@ -1,67 +1,36 @@
 import Maze
-import Search
-import copy
-import time
+from new_search import bfs, dfs
+from Fire_search import walk_on_fire, simple_walk
 
-maze_generater = Maze.Maze_generater()
-i = 0
-B = 0
-D = 0
-AE = 0
+generate_maze = Maze.Maze_generater()
 
-# print(time_start)
+solve_hard = 0
+solve_simple = 0
+over_all = 0
+while over_all < 1000:
+    maze = generate_maze.generate_maze(dim=30, p=0.4)
+    stack, _ = dfs(maze)
+    if len(stack) == 0:
+        continue
+    # p2, mcd = dfs(maze)
+    over_all = over_all + 1
+    p, mcw = walk_on_fire(maze, 0.2)
+    # generate_maze.draw_maze(mcw)
+    p1, mcs = simple_walk(maze, 0.2)
+    # generate_maze.draw_maze(mcs)
+    if len(p) > 0:
+        solve_hard = solve_hard + 1
+    if len(p1) > 0:
+        solve_simple = solve_simple + 1
 
+    print('<===================================>')
+    print('case = ', over_all)
+    print('success rate of hard = ', solve_hard / over_all)
+    print('success rate of simple = ', solve_simple / over_all)
+    # bp = 1
+    # generate_maze.draw_maze(mcw)
+    # bp = len(p)
+    # print(bp)
 
-while B == 0:
-    # print("<", 30*"=", ">", file=a.log)
-    # i = i + 1
-    maze = maze_generater(500, 0.35)
-    maze_copy = copy.deepcopy(maze)
-    BP = Search.BFS(maze_copy)
-    B = len(BP)
-    maze_copy = copy.deepcopy(maze)
-    DP = Search.DFS(maze_copy)
-    D = len(DP)
-    maze_copy = copy.deepcopy(maze)
-    time_start_1 = time.time()
-    AEP = Search.A_star_Euc(maze_copy)
-    AE = len(AEP)
-    time_AE = time.time() - time_start_1
-    maze_copy = copy.deepcopy(maze)
-    time_start_2 = time.time()
-    AMP = Search.A_star_Man(maze_copy)
-    AM = len(AMP)
-    time_AM = time.time() - time_start_2
-    if len(DP) > 0:
-        print(D)
-        print(B)
-        print(AE)
-        print(AM)
-        print("AE: ", time_AE)
-        print("AM: ", time_AM)
-    # print(i)
-# print(maze)
-# print(D, '/t', DP)
-# print(B, '/t', BP)
-# print(AE, '/t', AEP)
-
-
-# while True:
-#
-#     maze = maze_generater(1000, 0.35)
-#     maze_copy = copy.deepcopy(maze)
-#     BP = Search.BFS(maze_copy)
-#     B = len(BP)
-#     maze_copy = copy.deepcopy(maze)
-#     DP = Search.DFS(maze_copy)
-#     D = len(DP)
-#     for i in range(B - 1):
-#         j = i + 1
-#         d = abs(BP[j][0] - BP[i][0]) + abs(BP[j][1] - BP[i][1])
-#         if d > 1:
-#             print(maze)
-#             print(BP)
-#             print(BP[i], BP[j])
-#             break
-#         else:
-#             print('right')
+# generate_maze.draw_maze(mcd)
+print(maze)
