@@ -9,16 +9,23 @@
 import numpy as np
 from Project1.MazeRunner.MyPriorityQueue import MyPriorityQueue
 
+max_fringe = 0
 
-def depth_first_search(maze):
+
+def depth_first_search(maze, algorithm):
     start, goal = [1, 1], [len(maze) - 2, len(maze) - 2]
     stack = [start]
     directions = [[1, 0], [0, 1], [0, -1], [-1, 0]]
     while len(stack) != 0:
         cur = stack[-1]
+        global max_fringe
+        max_fringe = max(max_fringe, len(stack))
         i, j = cur[0], cur[1]
         if cur == goal:
-            return np.count_nonzero(maze == -1)
+            if algorithm is None:
+                return np.count_nonzero(maze == -1)
+            else:
+                return algorithm
         for direct in directions:
             if maze[i + direct[0]][j + direct[1]] == 0:
                 stack.append([i + direct[0], j + direct[1]])
@@ -71,3 +78,6 @@ def a_star(maze, heuristic):
                 maze[i + direct[0]][j + direct[1]] = -1
     return False
 
+
+def get_max_fringe():
+    return max_fringe

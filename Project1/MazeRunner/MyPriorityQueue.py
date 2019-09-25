@@ -24,3 +24,13 @@ class MyPriorityQueue:
 
     def qsize(self):
         return len(self.queue)
+
+
+# Override pq for hill climb
+class HillClimbPQ(MyPriorityQueue):
+    def push(self, priority, maze, length):
+        heapq.heappush(self.queue, (priority, self._index, maze, length))
+        self._index += 1
+
+    def pop(self):
+        return heapq.heappop(self.queue)[-1]
