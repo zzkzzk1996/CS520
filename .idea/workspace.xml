@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="abe4f51a-8bc2-41e5-ad01-dd688baab2df" name="Default Changelist" comment="update gitignore">
-      <change afterPath="$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project1/MazeRunner/HardMazeNoClass.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/MazeRunner/MazeRunner.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/MazeRunner/MazeRunner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py" afterDir="false" />
     </list>
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MazeRunner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="70" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="70" />
+            <state relative-caret-position="240">
+              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
               <folding>
                 <element signature="e#173#223#0" expanded="true" />
               </folding>
@@ -30,10 +31,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/HardMaze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="99" column="47" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
+            <state relative-caret-position="169">
+              <caret line="62" column="19" lean-forward="true" selection-start-line="25" selection-start-column="3" selection-end-line="62" selection-end-column="19" />
               <folding>
                 <element signature="e#171#230#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/HardMazeNoClass.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+              <folding>
+                <element signature="e#179#238#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,7 +60,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MazeGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-79">
+            <state>
               <caret column="21" lean-forward="true" selection-start-column="21" selection-end-column="21" />
             </state>
           </provider>
@@ -56,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="31" column="72" selection-start-line="31" selection-start-column="72" selection-end-line="31" selection-end-column="72" />
+            <state relative-caret-position="460">
+              <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -65,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+            <state relative-caret-position="206">
+              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="79" />
               <folding>
                 <element signature="e#178#196#0" expanded="true" />
               </folding>
@@ -74,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+            <state relative-caret-position="-176">
+              <caret lean-forward="true" />
               <folding>
                 <element signature="e#171#234#0" expanded="true" />
               </folding>
@@ -105,11 +118,12 @@
         <option value="$PROJECT_DIR$/Project1/MazeRunner/MazeGenerator.py" />
         <option value="$PROJECT_DIR$/Project1/MazeRunner/MazeRunner_1.py" />
         <option value="$PROJECT_DIR$/Project1/MazeRunner/PriorityQueue.py" />
+        <option value="$PROJECT_DIR$/Project1/MazeRunner/HardMaze.py" />
+        <option value="$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py" />
         <option value="$PROJECT_DIR$/Project1/MazeRunner/MazeRunner.py" />
         <option value="$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py" />
-        <option value="$PROJECT_DIR$/Project1/MazeRunner/HardMaze.py" />
         <option value="$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py" />
-        <option value="$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py" />
+        <option value="$PROJECT_DIR$/Project1/MazeRunner/HardMazeNoClass.py" />
       </list>
     </option>
   </component>
@@ -173,7 +187,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.FireMaze">
+  <component name="RunManager" selected="Python.HardMazeNoClass">
     <configuration name="FireMaze" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CS520" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -188,6 +202,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="HardMazeNoClass" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CS520" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Project1/MazeRunner" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Project1/MazeRunner/HardMazeNoClass.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -264,8 +300,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.FireMaze" />
+        <item itemvalue="Python.HardMazeNoClass" />
         <item itemvalue="Python.MazeRunner_1" />
+        <item itemvalue="Python.FireMaze" />
         <item itemvalue="Python.SearchAlgorithm" />
         <item itemvalue="Python.MazeGenerator" />
       </list>
@@ -310,7 +347,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33819000" />
+    <option name="totallyTimeSpent" value="39810000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -390,8 +427,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CS520$SearchAlgorithm.coverage" NAME="SearchAlgorithm Coverage Results" MODIFIED="1569337114862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
     <SUITE FILE_PATH="coverage/CS520$MazeGenerator.coverage" NAME="MazeGenerator Coverage Results" MODIFIED="1569010081657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
-    <SUITE FILE_PATH="coverage/CS520$MazeRunner_1.coverage" NAME="MazeRunner_1 Coverage Results" MODIFIED="1569348571387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
     <SUITE FILE_PATH="coverage/CS520$FireMaze.coverage" NAME="FireMaze Coverage Results" MODIFIED="1569443503945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
+    <SUITE FILE_PATH="coverage/CS520$MazeRunner_1.coverage" NAME="MazeRunner_1 Coverage Results" MODIFIED="1569443784155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
+    <SUITE FILE_PATH="coverage/CS520$HardMazeNoClass.coverage" NAME="HardMazeNoClass Coverage Results" MODIFIED="1569449642047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project1/MazeRunner" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
@@ -404,12 +442,22 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>self.length</expression-string>
+        <expression-string>length</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>length</expression-string>
+        <expression-string>heapq.heappop(self.queue)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>heapq.heappop(self.queue)[-1]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.length</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -486,56 +534,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MazeGenerator.py">
+    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret column="21" lean-forward="true" selection-start-column="21" selection-end-column="21" />
+        <state relative-caret-position="-176">
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#171#234#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/HardMaze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="99" column="47" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
+        <state relative-caret-position="169">
+          <caret line="62" column="19" lean-forward="true" selection-start-line="25" selection-start-column="3" selection-end-line="62" selection-end-column="19" />
           <folding>
             <element signature="e#171#230#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py">
+    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MazeGenerator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="31" column="72" selection-start-line="31" selection-start-column="72" selection-end-line="31" selection-end-column="72" />
+        <state>
+          <caret column="21" lean-forward="true" selection-start-column="21" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py">
+    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MyPriorityQueue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
-          <folding>
-            <element signature="e#178#196#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="460">
+          <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/MazeRunner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="70" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="70" />
+        <state relative-caret-position="240">
+          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
           <folding>
             <element signature="e#173#223#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/FireMaze.py">
+    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/SearchAlgorithm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+        <state relative-caret-position="206">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="79" />
           <folding>
-            <element signature="e#171#234#0" expanded="true" />
+            <element signature="e#178#196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project1/MazeRunner/HardMazeNoClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+          <folding>
+            <element signature="e#179#238#0" expanded="true" />
           </folding>
         </state>
       </provider>

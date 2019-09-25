@@ -16,9 +16,9 @@ if __name__ == '__main__':
     maze = Maze(10, 0.1).maze_generator()
     # res = SearchAlgorithm.depth_first_search(maze)
     # res = SearchAlgorithm.breadth_first_search(maze)
-    # res = SearchAlgorithm.a_star(maze, heuristic=euclidean_distance)
+    res = SearchAlgorithm.a_star(maze, heuristic=euclidean_distance)
     # res = SearchAlgorithm.a_star(maze, heuristic=manhattan_distance)
-    # print(res)
-    # print(maze)
-    HardMaze(maze, depth_first_search, get_max_fringe, 0.01).get_hard_maze()
+    print(res)
+    print(maze)
+    # HardMaze(maze, depth_first_search, get_max_fringe, 0.01).get_hard_maze()
 

@@ -62,19 +62,19 @@ def euclidean_distance(start, end):
 
 
 def a_star(maze, heuristic):
-    start, goal, route = [1, 1], [len(maze) - 2, len(maze) - 2], [1, 1]
+    start, goal = [1, 1], [len(maze) - 2, len(maze) - 2]
     directions = [[1, 0], [0, 1], [0, -1], [-1, 0]]
     pq = MyPriorityQueue()
-    pq.push(priority=heuristic(start, goal), cur=start, path=0, route=route)
+    pq.push(priority=heuristic(start, goal), cur=start, path=0, route=None)
     while pq.qsize() != 0:
-        (Priority, _, cur, path) = pq.pop()
+        (Priority, _, cur, path, route) = pq.pop()
         i, j = cur[0], cur[1]
         if cur == goal:
             return np.count_nonzero(maze == -1)
         for direct in directions:
             if maze[i + direct[0]][j + direct[1]] == 0:
-                next, route = [i + direct[0], j + direct[1]], [i + direct[0], j + direct[1]]
-                pq.push(priority=heuristic(next, goal) + path, cur=next, path=path + 1, route=route)
+                next = [i + direct[0], j + direct[1]]
+                pq.push(priority=heuristic(next, goal) + path, cur=next, path=path + 1, route=None)
                 maze[i + direct[0]][j + direct[1]] = -1
     return False
 
