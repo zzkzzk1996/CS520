@@ -3,7 +3,9 @@ from copy import deepcopy
 import numpy as np
 from random import randint
 from Maze import Maze_generater
-from new_search import dfs
+from astar import manhattan_distance
+from util import MyPriorityQueue
+from astar import a_star, manhattan_distance
 
 
 # draw = Maze_generater()
@@ -73,7 +75,9 @@ def walk_on_fire(maze, p):
             return stack, mc
         # print(1)
         update_fringe(mc, fringe_now, p)
-        if mc[per_cur.loc] == 5 or mc[len(mc) - 1, len(mc) - 1] == 5:
+        # if mc[per_cur.loc] == 5 or mc[len(mc) - 1, len(mc) - 1] == 5:
+        #     return [], mc
+        if mc[len(mc) - 2, len(mc) - 2] == 5:
             return [], mc
         for dir in dir_array:
             per_next = node(per_cur.i + dir[0], per_cur.j + dir[1])
@@ -90,32 +94,81 @@ def walk_on_fire(maze, p):
     return [], mc
 
 
-def simple_walk(maze, p):
-    stack = list()
-    while len(stack) == 0:
-        stack, mc = dfs(maze)
-    # the path it attempted to go
-    path = np.where(mc == 3)
-    path_len = len(path[0])
-    path = get_path(path)
+def astar_walk_on_fire(maze, heuristic, p):
+    start, goal, route = [1, 1], [len(maze) - 2, len(maze) - 2], [(1, 1)]
+    # start, goal, route = [1, 1], [len(maze) - 2, len(maze) - 2], str([1, 1])
+    directions = [[1, 0], [0, 1], [0, -1], [-1, 0]]
+    pq = MyPriorityQueue()
+    pq.push(priority=heuristic(start, goal), cur=start, path=0, route=route)
+    mc = deepcopy(maze)
     fringe = list()
     fire_spot = node(1, len(maze) - 2)
-    if mc[fire_spot.loc] == 3:
-        return [], mc
     mc[fire_spot.loc] = 5
     fringe.append(fire_spot)
-    while path_len > 0:
-        path_len = path_len - 1
+    while pq.qsize() != 0:
+        (Priority, _, cur, path, route) = pq.pop()
+        i, j = cur[0], cur[1]
+        if cur == goal:
+            return route, mc
+        fringe, mc = update_map(mc, fringe, p)
+        for direct in directions:
+            if mc[i + direct[0]][j + direct[1]] == 0:
+                next = [i + direct[0], j + direct[1]]
+                # new_route = route + "->" + str([i + direct[0], j + direct[1]])
+                new_route = deepcopy(route)
+                new_route.append((i + direct[0], j + direct[1]))
+                # route.append((i + direct[0], j + direct[1]))
+                pq.push(priority=heuristic(next, goal) + path, cur=next, path=path + 1, route=new_route)
+                mc[i + direct[0]][j + direct[1]] = -1
+    return [], mc
+
+
+def simple_walk(maze, p):
+    path = a_star(maze, heuristic=manhattan_distance)
+    # path = get_path(route)
+    # the path it attempted to go
+    # path = get_path(path)
+    fringe = list()
+    mc = deepcopy(maze)
+    fire_spot = node(1, len(maze) - 2)
+
+    mc[fire_spot.loc] = 5
+    fringe.append(fire_spot)
+    for cur_node in path:
         fringe = update_fringe(mc, fringe, p)
-        for fire_spot in fringe:
-            if fire_spot.loc in path:
-                return [], mc
+        if cur_node in fringe:
+            return [], mc
     return path, mc
+    # while path_len > 0:
+    #     path_len = path_len - 1
+    #     fringe = update_fringe(mc, fringe, p)
+    #     for fire_spot in fringe:
+    #         if fire_spot.loc in path:
+    #             return [], mc
 
 
-def get_path(path):
-    p = list()
-    for i, j in zip(path[0], path[1]):
-        point = (i, j)
-        p.append(point)
-    return p
+def update_map(maze, fringe_now, p):
+    # fringe_next = list()
+    dir_array = ([0, 1], [1, 0], [0, -1], [-1, 0])
+    fringe_next = list()
+    for fire_spot in fringe_now:
+        counter = 0
+        # print(fire_spot.loc)
+        for dir in dir_array:
+            ember_spot = node(fire_spot.i + dir[0], fire_spot.j + dir[1])
+            if maze[ember_spot.loc] != 2 and maze[ember_spot.loc] != 4 and maze[ember_spot.loc] != 5:
+                # print(0)
+                set_fire(maze, ember_spot, p)
+            if maze[ember_spot.loc] == 4:
+                # print(-1)
+                # 4 means this spot will catch on fire this time slot
+                fringe_next.append(ember_spot)
+            # print(counter)
+            if maze[ember_spot.loc] == 5 or maze[ember_spot.loc] == 4 or maze[ember_spot.loc] == 2:
+                counter = counter + 1
+                if counter == 4 and (maze[fire_spot.loc] == 5 or maze[fire_spot.loc] == 4):
+                    fringe_now.remove(fire_spot)
+    for ember_spot in fringe_next:
+        maze[ember_spot.loc] = 5
+        fringe_now.append(ember_spot)
+    return fringe_now, maze

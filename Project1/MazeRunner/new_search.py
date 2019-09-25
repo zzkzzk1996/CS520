@@ -51,15 +51,3 @@ def bfs(maze):
     return [], mc
 
 
-def euc_heuristc(current_state, goal_state):
-    d = math.sqrt(pow((goal_state[0] - current_state[0]), 2) + pow((goal_state[1] - current_state[1]), 2))
-    return d
-
-
-def man_heuristc(current_state, goal_state):
-    d = abs(goal_state[0] - current_state[0]) + abs(goal_state[1] - current_state[1])
-    return d
-
-
-def a_star_search(maze, heuristic):
-    pass
