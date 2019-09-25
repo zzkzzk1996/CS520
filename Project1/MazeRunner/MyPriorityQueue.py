@@ -15,8 +15,8 @@ class MyPriorityQueue:
         self._index = 0
         self.queue = []
 
-    def push(self, priority, cur, path):
-        heapq.heappush(self.queue, (priority, self._index, cur, path))
+    def push(self, priority, cur, path, route):
+        heapq.heappush(self.queue, (priority, self._index, cur, path, route))
         self._index -= 1
 
     def pop(self):
@@ -28,7 +28,7 @@ class MyPriorityQueue:
 
 # Override pq for hill climb
 class HillClimbPQ(MyPriorityQueue):
-    def push(self, priority, maze, length):
+    def push(self, priority, maze, length, route=None):
         heapq.heappush(self.queue, (priority, self._index, maze, length))
         self._index += 1
 
