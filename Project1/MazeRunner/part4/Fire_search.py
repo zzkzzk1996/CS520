@@ -1,11 +1,8 @@
-from util import node
+from part4.util import node
 from copy import deepcopy
-import numpy as np
 from random import randint
-from Maze import Maze_generater
-from astar import manhattan_distance
-from util import MyPriorityQueue
-from astar import a_star, manhattan_distance
+from part4.util import MyPriorityQueue
+from part4.astar import a_star, manhattan_distance
 
 
 # draw = Maze_generater()
@@ -95,6 +92,7 @@ def walk_on_fire(maze, p):
 
 
 def astar_walk_on_fire(maze, heuristic, p):
+    dim = len(maze) - 2
     start, goal, route = [1, 1], [len(maze) - 2, len(maze) - 2], [(1, 1)]
     # start, goal, route = [1, 1], [len(maze) - 2, len(maze) - 2], str([1, 1])
     directions = [[1, 0], [0, 1], [0, -1], [-1, 0]]
@@ -114,11 +112,25 @@ def astar_walk_on_fire(maze, heuristic, p):
         for direct in directions:
             if mc[i + direct[0]][j + direct[1]] == 0:
                 next = [i + direct[0], j + direct[1]]
+                danger = 0
+
+                if ((next[1] < dim and mc[next[0], next[1] + 1] == 5) or (
+                        next[0] < 10 and mc[next[0] + 1, next[1]] == 5)):
+                    danger = 0
+                elif ((next[1] < dim - 1 and mc[next[0], next[1] + 2] == 5) or (
+                        next[0] < 9 and mc[next[0] + 2, next[1]] == 5)):
+                    danger = 2
+                elif ((next[1] < dim - 2 and mc[next[0], next[1] + 3] == 5) or (
+                        next[0] < 8 and mc[next[0] + 3, next[1]] == 5)):
+                    danger = 1
+                else:
+                    danger = -1
+
                 # new_route = route + "->" + str([i + direct[0], j + direct[1]])
                 new_route = deepcopy(route)
                 new_route.append((i + direct[0], j + direct[1]))
                 # route.append((i + direct[0], j + direct[1]))
-                pq.push(priority=heuristic(next, goal) + path, cur=next, path=path + 1, route=new_route)
+                pq.push(priority=heuristic(next, goal) + path + danger, cur=next, path=path + 1, route=new_route)
                 mc[i + direct[0]][j + direct[1]] = -1
     return [], mc
 
@@ -135,9 +147,13 @@ def simple_walk(maze, p):
     mc[fire_spot.loc] = 5
     fringe.append(fire_spot)
     for cur_node in path:
-        fringe = update_fringe(mc, fringe, p)
-        if cur_node in fringe:
+        if mc[cur_node[0], cur_node[1]] == 5:
             return [], mc
+        mc[cur_node[0], cur_node[1]] = 3
+        fringe, mc = update_map(mc, fringe, p)
+        # draw.draw_maze(mc)
+        # if cur_node in fringe:
+        #     return [], mc
     return path, mc
     # while path_len > 0:
     #     path_len = path_len - 1

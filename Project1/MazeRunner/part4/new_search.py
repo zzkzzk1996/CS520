@@ -1,8 +1,6 @@
-import Maze
 import copy
 import numpy as np
-from util import node
-import math
+from part4.util import node
 
 
 def dfs(maze):

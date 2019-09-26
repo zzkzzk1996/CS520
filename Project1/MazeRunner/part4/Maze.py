@@ -1,7 +1,7 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-
+import pylab
 
 
 class Maze_generater:
@@ -47,3 +47,4 @@ class Maze_generater:
         plt.xticks([]), plt.yticks([])
         plt.tight_layout()
         plt.show()
+        pylab.show()

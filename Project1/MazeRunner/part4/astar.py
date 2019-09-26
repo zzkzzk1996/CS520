@@ -1,5 +1,5 @@
-from util import MyPriorityQueue
-from Maze import Maze_generater
+from part4.util import MyPriorityQueue
+from part4.Maze import Maze_generater
 from copy import deepcopy
 
 
