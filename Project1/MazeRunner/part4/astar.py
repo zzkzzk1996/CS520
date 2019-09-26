@@ -27,7 +27,7 @@ def a_star(maze, heuristic):
                 new_route.append((i + direct[0], j + direct[1]))
                 # route.append((i + direct[0], j + direct[1]))
                 pq.push(priority=heuristic(next, goal) + path, cur=next, path=path + 1, route=new_route)
-                mc[i + direct[0]][j + direct[1]] = -1
+                mc[i + direct[0]][j + direct[1]] = 3
     return False
 
 

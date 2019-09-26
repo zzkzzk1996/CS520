@@ -61,7 +61,6 @@ while possi <= 1.0:
     # bp = len(p)
     # print(bp)
 
-# generate_maze.draw_maze(maze)
 plt.title("dfs")
 plt.plot(p_list, cur_1)
 plt.show()
@@ -71,3 +70,22 @@ plt.show()
 plt.title("a_star")
 plt.plot(p_list, cur_3)
 plt.show()
+
+while len(stack) == 0:
+    maze = generate_maze.generate_maze(dim=20, p=0.5)
+    stack, _ = dfs(maze)
+# p2, mcd = dfs(maze)
+over_all = over_all + 1
+p, mcw = walk_on_fire(maze, 0.5)
+
+p2, mca = astar_walk_on_fire(maze, manhattan_distance, 0.5)
+# generate_maze.draw_maze(mcw)
+p1, mcs = simple_walk(maze, 0.5)
+
+generate_maze.draw_maze(mcw)
+generate_maze.draw_maze(mca)
+generate_maze.draw_maze(mcs)
+
+
+
+

@@ -152,7 +152,7 @@ def astar_walk_on_fire(maze, heuristic, p):
                 new_route.append((i + direct[0], j + direct[1]))
                 # route.append((i + direct[0], j + direct[1]))
                 pq.push(priority=heuristic(next, goal) + path + danger, cur=next, path=path + 1, route=new_route)
-                mc[i + direct[0]][j + direct[1]] = -1
+                mc[i + direct[0]][j + direct[1]] = 3
     return [], mc
 
 
