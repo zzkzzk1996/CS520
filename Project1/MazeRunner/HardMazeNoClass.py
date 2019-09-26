@@ -15,11 +15,11 @@ import matplotlib.pyplot as plt
 def get_hard_maze(maze, algorithm):
     harder = True
     hardness = algorithm(maze)
-    # print(maze)
+    print(maze)
     while harder:
         harder, maze, new_hardness = hill_climb(maze, algorithm)
-    # print(maze)
-    # print(str(hardness) + " -> " + str(new_hardness))
+    print(maze)
+    print(str(hardness) + " -> " + str(new_hardness))
     return maze, new_hardness / hardness
 
 
@@ -134,14 +134,22 @@ def draw_maze(maze):
 
 
 if __name__ == '__main__':
-    # for a star
-    hardnesses = []
-    for i in range(100):
-        maze = Maze(50, 0.3).maze_generator()
-        while not is_valid(maze, a_star):
-            maze = Maze(50, 0.3).maze_generator()
-        # draw_maze(a_star_plot(maze))
-        maze, hardness = get_hard_maze(maze, a_star)
-        hardnesses.append(hardness)
-        # draw_maze(a_star_plot(maze))
-    print(sum(hardnesses) / 100)
+    maze = Maze(10, 0.3).maze_generator()
+    while not is_valid(maze, a_star):
+        maze = Maze(10, 0.3).maze_generator()
+    draw_maze(a_star_plot(maze))
+    maze, hardness = get_hard_maze(maze, a_star)
+    draw_maze(a_star_plot(maze)
+              )
+    # # for a star
+    # hardnesses = []
+    # for i in range(10000):
+    #     maze = Maze(10, 0.3).maze_generator()
+    #     while not is_valid(maze, a_star):
+    #         maze = Maze(10, 0.3).maze_generator()
+    #     draw_maze(a_star_plot(maze))
+    #     maze, hardness = get_hard_maze(maze, a_star)
+    #     hardnesses.append(hardness)
+    #     draw_maze(a_star_plot(maze))
+    #     # print(sum(hardnesses) / (i + 1), i)
+    # print("Average Hardness Index: " + str(sum(hardnesses) / 10000))
