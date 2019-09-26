@@ -3,13 +3,13 @@
 # @project : CS520
 # @author: Zekun Zhang
 # @contact: zekunzhang.1996@gmail.com
-# @file: MazeRunner.py
+# @file: MazeRunner_Zekun.py
 # @time: 2019-09-20 15:02:17
 
-from Project1.MazeRunner.MazeGenerator import Maze
-from Project1.MazeRunner.SearchAlgorithm import manhattan_distance, euclidean_distance, depth_first_search, \
+from Project1.MazeRunner_Zekun.MazeGenerator import Maze
+from Project1.MazeRunner_Zekun.SearchAlgorithm import manhattan_distance, euclidean_distance, depth_first_search, \
     get_max_fringe
-from Project1.MazeRunner.HardMaze import HardMaze
+from Project1.MazeRunner_Zekun.HardMaze import HardMaze
 import SearchAlgorithm
 
 if __name__ == '__main__':

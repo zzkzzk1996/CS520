@@ -7,7 +7,7 @@
 # @time: 2019-09-24 07:12:26
 
 import numpy as np
-from Project1.MazeRunner.MyPriorityQueue import MyPriorityQueue
+from Project1.MazeRunner_Zekun.MyPriorityQueue import MyPriorityQueue
 
 max_fringe = 0
 

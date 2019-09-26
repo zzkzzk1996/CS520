@@ -6,8 +6,8 @@
 # @file: FireMaze.py
 # @time: 2019-09-25 16:23:48
 
-from Project1.MazeRunner.MyPriorityQueue import MyPriorityQueue
-from Project1.MazeRunner.MazeGenerator import Maze
+from Project1.MazeRunner_Zekun.MyPriorityQueue import MyPriorityQueue
+from Project1.MazeRunner_Zekun.MazeGenerator import Maze
 
 
 def a_star(maze, heuristic):
