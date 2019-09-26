@@ -9,16 +9,18 @@
 
 from Project1.MazeRunner.MyPriorityQueue import HillClimbPQ, MyPriorityQueue
 from Project1.MazeRunner.MazeGenerator import Maze
+import matplotlib.pyplot as plt
 
 
 def get_hard_maze(maze, algorithm):
     harder = True
     hardness = algorithm(maze)
-    print(maze)
+    # print(maze)
     while harder:
         harder, maze, new_hardness = hill_climb(maze, algorithm)
-    print(maze)
-    print(str(hardness) + " -> " + str(new_hardness))
+    # print(maze)
+    # print(str(hardness) + " -> " + str(new_hardness))
+    return maze, new_hardness / hardness
 
 
 def hill_climb(maze, algorithm):
@@ -101,9 +103,45 @@ def a_star(maze):
     return False
 
 
+def a_star_plot(maze):
+    m = maze.copy()
+    start, goal = [1, 1], [len(maze) - 2, len(maze) - 2]
+    directions = [[1, 0], [0, 1], [0, -1], [-1, 0]]
+    pq = MyPriorityQueue()
+    pq.push(priority=manhattan_distance(start, goal), cur=start, path=0, route=None)
+    while pq.qsize() != 0:
+        (Priority, _, cur, path, route) = pq.pop()
+        i, j = cur[0], cur[1]
+        if cur == goal:
+            return m
+        for direct in directions:
+            if m[i + direct[0]][j + direct[1]] == 0:
+                next = [i + direct[0], j + direct[1]]
+                pq.push(priority=manhattan_distance(next, goal) + path, cur=next, path=path + 1, route=None)
+                m[i + direct[0]][j + direct[1]] = -1
+    return False
+
+
+def draw_maze(maze):
+    if maze is None:
+        return
+    else:
+        plt.figure(figsize=(5, 5))
+        plt.pcolor(maze[::-1], edgecolors='black', cmap='Blues', linewidths=1)
+        plt.xticks([]), plt.yticks([])
+        plt.tight_layout()
+        plt.show()
+
+
 if __name__ == '__main__':
     # for a star
-    maze = Maze(10, 0.3).maze_generator()
-    while not is_valid(maze, a_star):
-        maze = Maze(10, 0.3).maze_generator()
-    get_hard_maze(maze, a_star)
+    hardnesses = []
+    for i in range(100):
+        maze = Maze(50, 0.3).maze_generator()
+        while not is_valid(maze, a_star):
+            maze = Maze(50, 0.3).maze_generator()
+        # draw_maze(a_star_plot(maze))
+        maze, hardness = get_hard_maze(maze, a_star)
+        hardnesses.append(hardness)
+        # draw_maze(a_star_plot(maze))
+    print(sum(hardnesses) / 100)
