@@ -5,10 +5,14 @@ from part4.util import MyPriorityQueue
 from part4.astar import a_star, manhattan_distance
 
 
-# draw = Maze_generater()
-
-
 def update_fringe(maze, fringe_now, p):
+    """
+
+    :param maze:
+    :param fringe_now: the fire fringe at this moment
+    :param p: the possibility of catching fire
+    :return: the fire fringe at the next moment
+    """
     # fringe_next = list()
     dir_array = ([0, 1], [1, 0], [0, -1], [-1, 0])
     fringe_next = list()
@@ -36,6 +40,14 @@ def update_fringe(maze, fringe_now, p):
 
 
 def set_fire(maze, ember_spot, p):
+    """
+
+    :param maze:
+    :param ember_spot: the spot that probably will catch on fire
+    :param p:
+    :return: none
+    determine the spot will catch fire or not
+    """
     dir_array = ([0, 1], [1, 0], [0, -1], [-1, 0])
     counter = 0
     for dir in dir_array:
@@ -50,6 +62,12 @@ def set_fire(maze, ember_spot, p):
 
 
 def walk_on_fire(maze, p):
+    """
+
+    :param maze:
+    :param p:
+    :return: the stack of dfs and the path on maze, if it is unsolvable, return an empty list and the maze
+    """
     start_node = node(1, 1)
     fire_spot = node(1, len(maze) - 2)
     goal_node = node(len(maze) - 2, len(maze) - 2)
@@ -70,12 +88,14 @@ def walk_on_fire(maze, p):
         if per_cur.loc == goal_node.loc:
             # return np.count_nonzero(mc == 3), mc
             return stack, mc
-        # print(1)
+        # the fire spread once
         update_fringe(mc, fringe_now, p)
         # if mc[per_cur.loc] == 5 or mc[len(mc) - 1, len(mc) - 1] == 5:
         #     return [], mc
+        # if the goal is stuck, this maze will be unsolvable
         if mc[len(mc) - 2, len(mc) - 2] == 5:
             return [], mc
+        # the robot find way out without touching the fire spot
         for dir in dir_array:
             per_next = node(per_cur.i + dir[0], per_cur.j + dir[1])
             if mc[per_next.loc] == 0:
@@ -108,12 +128,13 @@ def astar_walk_on_fire(maze, heuristic, p):
         i, j = cur[0], cur[1]
         if cur == goal:
             return route, mc
+        # update the maze with fire spreading once at a time
         fringe, mc = update_map(mc, fringe, p)
         for direct in directions:
             if mc[i + direct[0]][j + direct[1]] == 0:
                 next = [i + direct[0], j + direct[1]]
                 danger = 0
-
+                # the danger weight, the difference between the original ones
                 if ((next[1] < dim and mc[next[0], next[1] + 1] == 5) or (
                         next[0] < 10 and mc[next[0] + 1, next[1]] == 5)):
                     danger = 0
@@ -136,6 +157,13 @@ def astar_walk_on_fire(maze, heuristic, p):
 
 
 def simple_walk(maze, p):
+    """
+
+    :param maze:
+    :param p:
+    :return:
+    the baseline algorithm
+    """
     path = a_star(maze, heuristic=manhattan_distance)
     # path = get_path(route)
     # the path it attempted to go
@@ -164,6 +192,14 @@ def simple_walk(maze, p):
 
 
 def update_map(maze, fringe_now, p):
+    """
+
+    :param maze:
+    :param fringe_now:
+    :param p:
+    :return:
+    update the maze with fire spreading
+    """
     # fringe_next = list()
     dir_array = ([0, 1], [1, 0], [0, -1], [-1, 0])
     fringe_next = list()

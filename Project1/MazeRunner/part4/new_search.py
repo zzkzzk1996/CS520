@@ -2,7 +2,9 @@ import copy
 import numpy as np
 from part4.util import node
 
-
+"""
+The bfs and dfs implementation file.
+"""
 def dfs(maze):
     stack = list()
     mc = copy.deepcopy(maze)

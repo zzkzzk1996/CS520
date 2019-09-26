@@ -2,7 +2,9 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab
-
+"""
+The maze generator and drawer
+"""
 
 class Maze_generater:
     def __init__(self):
