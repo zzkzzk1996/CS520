@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Project1/MazeRunner_Zekun" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project1/Part3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project1/Part4" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project1/MazeRunner_ZiqiWang" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
