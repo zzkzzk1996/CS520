@@ -1,6 +1,6 @@
 import copy
 import numpy as np
-from part4.util import node
+from Part4.util import node
 
 """
 The bfs and dfs implementation file.
