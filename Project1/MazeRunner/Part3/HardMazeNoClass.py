@@ -7,8 +7,8 @@
 # @time: 2019-09-25 16:42:25
 
 
-from Project1.Part3.MyPriorityQueue import HillClimbPQ, MyPriorityQueue
-from Project1.Part3.MazeGenerator import Maze
+from MyPriorityQueue import HillClimbPQ, MyPriorityQueue
+from MazeRunner.Part3 import Maze
 import matplotlib.pyplot as plt
 
 
