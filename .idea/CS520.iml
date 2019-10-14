@@ -9,9 +9,10 @@
       <sourceFolder url="file://$MODULE_DIR$/Project1/MazeRunner_ZiqiWang" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project1/MazeRunner_Richa" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project1/MazeRunner/Part1&amp;2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project2" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (ailearning)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">

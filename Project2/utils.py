@@ -1,9 +1,9 @@
 import numpy as np
-import random
+# import random
 
 import matplotlib.pyplot as plt
 
-dir_arr = ([0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0])
+dir_arr = ([0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1])
 
 
 class MineMap:
@@ -82,7 +82,6 @@ class MineMap:
         plt.tight_layout()
         plt.show()
 
-
-ms = MineMap(p=0.14)
-print(ms.board)
-ms.drawboard()
+# ms = MineMap(p=0.14)
+# print(ms.board)
+# ms.drawboard()
