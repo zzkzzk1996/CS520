@@ -1,5 +1,5 @@
 # CS520
-### Team member: 
+### Contributors: 
 - *Zekun Zhang* &emsp;zz364@scarletmail.rutgers.edu
 - *Ziqi Wang* &emsp;zw280@scarletmail.rutgers.edu
 - *Richa Rai* &emsp;rr708@psych.rutgers.edu
