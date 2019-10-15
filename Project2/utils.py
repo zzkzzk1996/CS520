@@ -64,6 +64,15 @@ class MineMap:
         board = self.generate_tips(board)
         self.board = board
 
+    def get_mines(self):
+        mine_number = 0
+        row, column = np.shape(self.board)
+        for i in range(row):
+            for j in range(column):
+                if self.board[i][j] == -1:
+                    mine_number += 1
+        return mine_number
+
     def drawboard(self, originalboard=None):
         if originalboard is None:
             board = self.board.copy()
@@ -82,6 +91,17 @@ class MineMap:
         plt.tight_layout()
         plt.show()
 
+
 # ms = MineMap(p=0.14)
 # print(ms.board)
 # ms.drawboard()
+class Sweeper:
+    """
+    this class is to generate the sweeper's map and the search algorithm
+    """
+
+    def __init__(self, board=None, mine_number=0):
+        row, column = np.shape(board)
+        self.sweeper_map = np.full((row, column), -1, dtype=int)
+        self.mine_number = mine_number
+
