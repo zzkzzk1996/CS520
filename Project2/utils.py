@@ -64,14 +64,14 @@ class MineMap:
         board = self.generate_tips(board)
         self.board = board
 
-    def get_mines(self):
-        mine_number = 0
-        row, column = np.shape(self.board)
-        for i in range(row):
-            for j in range(column):
-                if self.board[i][j] == -1:
-                    mine_number += 1
-        return mine_number
+    # def get_mines(self):
+    #     mine_number = 0
+    #     row, column = np.shape(self.board)
+    #     for i in range(row):
+    #         for j in range(column):
+    #             if self.board[i][j] == -1:
+    #                 mine_number += 1
+    #     return mine_number
 
     def drawboard(self, originalboard=None):
         if originalboard is None:
@@ -101,7 +101,92 @@ class Sweeper:
     """
 
     def __init__(self, board=None, mine_number=0):
-        row, column = np.shape(board)
-        self.sweeper_map = np.full((row, column), -1, dtype=int)
+        self.row, self.col = np.shape(board)
+        self.mine_map = board
+        self.sweeper_map = np.full((self.row, self.col), -1, dtype=int)
         self.mine_number = mine_number
+        self.start_point = [0, 0]
 
+    def sweep_safe(self):
+        for i in range(self.start_point[0], self.row):
+            for j in range(self.col):
+                current_value = self.mine_map[i][j]
+                self.get_neighbor(current_value=current_value, current_location=(i, j))
+
+    def get_neighbor(self, current_value, current_location=(0, 0)):
+        i, j = current_location[0], current_location[1]
+        if current_value == 0:
+            for dir in dir_arr:
+                point = [i + dir[0] if 0 <= i + dir[0] < self.row else -1,
+                         j + dir[1] if 0 <= j + dir[1] < self.col else -1]
+                if point[0] == -1 or point[1] == -1:
+                    continue
+                self.sweeper_map[point[0]][point[1]] = self.mine_map[point[0]][point[1]] if self.sweeper_map[point[0]][
+                                                                                                point[1]] == -1 else \
+                    self.sweeper_map[point[0]][point[1]]
+            return 0
+        elif current_value > 0:
+            num_mines, num_unknown = 0, 0
+            for dir in dir_arr:
+                point = [i + dir[0] if 0 <= i + dir[0] < self.row else -1,
+                         j + dir[1] if 0 <= j + dir[1] < self.col else -1]
+                if point[0] == -1 or point[1] == -1:
+                    continue
+                if self.sweeper_map[point[0]][point[1]] < -1:
+                    num_mines += 1
+                elif self.sweeper_map[point[0]][point[1]] == -1:
+                    num_unknown += 1
+            if current_value == num_unknown + num_mines:
+                current_value -= num_mines
+                if current_value == 0:
+                    self.get_neighbor(current_value=current_value, current_location=(i, j))
+                else:
+                    return current_value
+            else:
+                return -1
+
+    def sweep_mine(self):
+        check = False
+        for i in range(self.start_point[0], self.row):
+            for j in range(self.col):
+                current_value = self.sweeper_map[i][j]
+                if current_value > 0:
+                    if self.get_neighbor(current_value=current_value, current_location=(i, j)) != -1:
+                        if self.get_neighbor(current_value=current_value, current_location=(i, j)) == current_value:
+                            self.set_mines(current_location=(i, j))
+                            check = True
+        return check
+
+    def set_mines(self, current_location=(0, 0)):
+        i, j = current_location[0], current_location[1]
+        for dir in dir_arr:
+            point = [i + dir[0] if 0 <= i + dir[0] < self.row else -1,
+                     j + dir[1] if 0 <= j + dir[1] < self.col else -1]
+            if point[0] == -1 or point[1] == -1:
+                continue
+            if self.sweeper_map[point[0]][point[1]] == -1:
+                self.sweeper_map[point[0]][point[1]], self.mine_number = -2, self.mine_number - 1
+
+    def flip(self):
+        if self.mine_number == 0:
+            return False
+        for i in range(self.row):
+            for j in range(self.col):
+                if self.sweeper_map[i][j] == -1:
+                    if self.mine_map[i][j] == -1:
+                        self.sweeper_map[i][j], self.mine_number = -3, self.mine_number - 1
+                    else:
+                        self.sweeper_map[i][j] = self.mine_map[i][j]
+                    return True
+
+    def draw_board(self):
+        sweeper_map = self.sweeper_map.copy()
+        sweeper_map[sweeper_map == -2], sweeper_map[sweeper_map == -3] = -12, -12
+        if (sweeper_map != -2).all():
+            sweeper_map[sweeper_map == 0] = 0
+
+        plt.figure(figsize=(5, 5))
+        plt.pcolor(-sweeper_map[::-1], edgecolors='black', cmap='bwr', linewidths=2)
+        plt.xticks([]), plt.yticks([])
+        plt.tight_layout()
+        plt.show()
