@@ -14,10 +14,7 @@ class MineMap:
     def __init__(self, x=10, y=10, p=0.2):
         self.x = 10
         self.y = 10
-        if p < 1 and p > 0:
-            self.mine_number = p * x * y
-        else:
-            self.mine_number = p
+        self.mine_number = p * x * y if 1 > p > 0 else p
         self.generate_board()
 
     def generate_map(self):
@@ -64,15 +61,6 @@ class MineMap:
         board = self.generate_tips(board)
         self.board = board
 
-    # def get_mines(self):
-    #     mine_number = 0
-    #     row, column = np.shape(self.board)
-    #     for i in range(row):
-    #         for j in range(column):
-    #             if self.board[i][j] == -1:
-    #                 mine_number += 1
-    #     return mine_number
-
     def drawboard(self, originalboard=None):
         if originalboard is None:
             board = self.board.copy()
@@ -80,7 +68,7 @@ class MineMap:
             board = originalboard.copy()
         board[board == -1] = -5
         board[board == -2] = -12
-        if ((board != -2).all() == True):
+        if (board != -2).all():
             board[board == -1] = -2
             # board[board>0]=11
             board[board == 0] = 0
