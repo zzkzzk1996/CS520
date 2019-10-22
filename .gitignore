@@ -103,9 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-<<<<<<< HEAD
 .idea/
-=======
 .idea
 .DS_Store
->>>>>>> merge
+
+
