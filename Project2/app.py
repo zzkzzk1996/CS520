@@ -66,8 +66,8 @@ def app(x, y, p):
 
 
 if __name__ == '__main__':
-    p1 = multiprocessing.Process(target=app, args=(25, 25, 125))
-    p2 = multiprocessing.Process(target=app, args=(16, 16, 51))
+    p1 = multiprocessing.Process(target=app, args=(36, 36, 259))
+    p2 = multiprocessing.Process(target=app, args=(36, 36, 324))
     p1.start()
     p2.start()
     # p1.join()
