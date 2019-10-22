@@ -1,9 +1,15 @@
-import numpy as np
-import random
+#!/usr/bin/env python
+# encoding: utf-8
+# @project : CS520
+# @author: Zekun Zhang
+# @contact: zekunzhang.1996@gmail.com
+# @file: minemap.py
+# @time: 2019-10-21 16:34:21
 
+import numpy as np
 import matplotlib.pyplot as plt
 
-dir_arr = ([0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0])
+dir_arr = ([0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1])
 
 
 class MineMap:
@@ -11,13 +17,10 @@ class MineMap:
     class for generating mine map
     """
 
-    def __init__(self, x=10, y=10, p=0.2):
-        self.x = 10
-        self.y = 10
-        if p < 1 and p > 0:
-            self.mine_number = p * x * y
-        else:
-            self.mine_number = p
+    def __init__(self, x=10, y=10, p=0.15):
+        self.x = x
+        self.y = y
+        self.mine_number = p * x * y if 1 > p > 0 else p
         self.generate_board()
 
     def generate_map(self):
@@ -71,7 +74,7 @@ class MineMap:
             board = originalboard.copy()
         board[board == -1] = -5
         board[board == -2] = -12
-        if ((board != -2).all() == True):
+        if (board != -2).all():
             board[board == -1] = -2
             # board[board>0]=11
             board[board == 0] = 0
@@ -81,8 +84,3 @@ class MineMap:
         plt.xticks([]), plt.yticks([])
         plt.tight_layout()
         plt.show()
-
-
-ms = MineMap(p=0.14)
-print(ms.board)
-ms.drawboard()
