@@ -31,8 +31,15 @@ if __name__ == '__main__':
         sweeper.sweep_safe()
         while sweeper.sweep_mine(): continue
 
-    sweeper.draw_board()
-    map_generator = utils.MineMap()
-    map_generator.drawboard(board)
-    print(sweeper.sweeper_map)
-    print(board)
+    # sweeper.draw_board()
+    # map_generator = utils.MineMap()
+    # map_generator.drawboard(board)
+    # print(sweeper.sweeper_map)
+    # print(board)
+
+    num = utils.exploded_mine(sweeper.sweeper_map)
+    mine = map_generator.mine_number
+
+    print(num, mine)
+
+

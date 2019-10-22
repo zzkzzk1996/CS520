@@ -12,8 +12,8 @@ class MineMap:
     """
 
     def __init__(self, x=10, y=10, p=0.2):
-        self.x = 10
-        self.y = 10
+        self.x = x
+        self.y = y
         self.mine_number = p * x * y if 1 > p > 0 else p
         self.generate_board()
 
@@ -178,3 +178,13 @@ class Sweeper:
         plt.xticks([]), plt.yticks([])
         plt.tight_layout()
         plt.show()
+
+
+def exploded_mine(sweeper_map):
+    num = 0
+    row, col = np.shape(sweeper_map)
+    for i in range(row):
+        for j in range(col):
+            if sweeper_map[i][j] == -3:
+                num += 1
+    return num
