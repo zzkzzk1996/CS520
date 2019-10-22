@@ -11,7 +11,7 @@ import time
 if __name__ == '__main__':
     avg, avg_improve, time_con, time_con_improve = 0, 0, 0, 0
     for i in range(100):
-        map_generator = minemap.MineMap(x=25, y=25, p=94)
+        map_generator = minemap.MineMap(x=25, y=25, p=156)
         board = map_generator.board
         mine = map_generator.mine_number
         sweep = sweeper.Sweeper(board, map_generator.mine_number)
