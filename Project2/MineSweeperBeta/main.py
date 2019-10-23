@@ -1,24 +1,17 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2019/10/22 17:46
-# @Author  : Ziqi Wang
-# @FileName: app.py
-# @Email: zw280@scarletmail.rutgers.edu
 import sweeper
 import minemap
 import numpy as np
 import time
-import multiprocessing
-
 
 # map_generator = utils.MineMap()
 # board = map_generator.board
 # mines = map_generator.get_mines()
 # print(board)
 
-def app(x, y, p):
+if __name__ == '__main__':
     avg, avg_improve, time_con, time_con_improve = 0, 0, 0, 0
     for i in range(100):
-        map_generator = minemap.MineMap(x=x, y=y, p=p)
+        map_generator = minemap.MineMap(x=16, y=16, p=38)
         board = map_generator.board
         mine = map_generator.mine_number
         sweep = sweeper.Sweeper(board, map_generator.mine_number)
@@ -45,7 +38,7 @@ def app(x, y, p):
         # map_generator.drawboard(board)
         # print(sweeper.sweeper_map)
         # print(board)
-        print("Progress:{}%".format(((i + 1) * 100 / 100)) + ' x = ' + str(x), flush=True)
+        print("Progress:{}%".format(((i + 1) * 100 / 100)), flush=True)
     avg /= 100
     avg_improve /= 100
     print(str(avg) + " -> " + str(time_con))
@@ -63,12 +56,3 @@ def app(x, y, p):
     # map_generator.drawboard(board)
     # print(sweep.sweeper_map)
     # print(board)
-
-
-if __name__ == '__main__':
-    p1 = multiprocessing.Process(target=app, args=(36, 36, 259))
-    p2 = multiprocessing.Process(target=app, args=(36, 36, 324))
-    p1.start()
-    p2.start()
-    # p1.join()
-    # p2.join()
