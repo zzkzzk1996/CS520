@@ -163,12 +163,13 @@ class Sweeper:
 
     def draw_board(self):
         sweeper_map = self.sweeper_map.copy()
-        sweeper_map[sweeper_map == -2], sweeper_map[sweeper_map == -3] = -12, -12
+        sweeper_map[sweeper_map == -2], sweeper_map[sweeper_map == -3] = -12, -8
         if (sweeper_map != -2).all():
-            sweeper_map[sweeper_map == 0] = 0
+            sweeper_map[sweeper_map >= 0] = 0
 
         plt.figure(figsize=(5, 5))
         plt.pcolor(-sweeper_map[::-1], edgecolors='black', cmap='bwr', linewidths=2)
         plt.xticks([]), plt.yticks([])
         plt.tight_layout()
+        # plt.legend(loc='upper right')
         plt.show()
