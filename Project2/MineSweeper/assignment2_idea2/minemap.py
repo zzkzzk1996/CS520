@@ -77,7 +77,7 @@ class MineMap:
         if (board != -2).all():
             board[board == -1] = -2
             # board[board>0]=11
-            board[board == 0] = 0
+            board[board >= 0] = 0
 
         plt.figure(figsize=(5, 5))
         plt.pcolor(-board[::-1], edgecolors='black', cmap='bwr', linewidths=2)
