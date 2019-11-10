@@ -1,8 +1,8 @@
-from part4.util import node
+from Part4.util import node
 from copy import deepcopy
 from random import randint
-from part4.util import MyPriorityQueue
-from part4.astar import a_star, manhattan_distance
+from Part4.util import MyPriorityQueue
+from MazeRunner_ZiqiWang.astar import a_star, manhattan_distance
 
 
 def update_fringe(maze, fringe_now, p):

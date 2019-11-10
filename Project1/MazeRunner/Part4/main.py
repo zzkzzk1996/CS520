@@ -1,7 +1,7 @@
-from part4 import Maze
-from part4.new_search import dfs
-from part4.Fire_search import walk_on_fire, simple_walk, astar_walk_on_fire
-from part4.astar import manhattan_distance
+from Part4 import Maze
+from Part4.new_search import dfs
+from Part4.Fire_search import walk_on_fire, simple_walk, astar_walk_on_fire
+from MazeRunner_ZiqiWang.astar import manhattan_distance
 from matplotlib import pyplot as plt
 """
 This is the main function I use

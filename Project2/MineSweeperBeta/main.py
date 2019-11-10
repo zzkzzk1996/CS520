@@ -11,24 +11,8 @@ import time
 if __name__ == '__main__':
     avg, avg_improve, time_con, time_con_improve = 0, 0, 0, 0
     for i in range(100):
-        map_generator = minemap.MineMap(x=16, y=16)
+        map_generator = minemap.MineMap(x=16, y=16, p=38)
         board = map_generator.board
-        # board = np.array([[-1, 1, 1, -1, -1, 2, 1, 1, 1, 1, ],
-        #                   [1, 2, 2, 3, 3, -1, 1, 2, -1, 2, ],
-        #                   [1, 2, -1, 1, 1, 1, 2, 3, -1, 2, ],
-        #                   [-1, 2, 1, 1, 0, 0, 1, -1, 2, 1, ],
-        #                   [1, 1, 1, 2, 2, 1, 1, 1, 1, 0, ],
-        #                   [0, 0, 2, -1, -1, 1, 0, 0, 0, 0, ],
-        #                   [0, 0, 2, -1, 3, 2, 1, 2, 1, 1, ],
-        #                   [0, 0, 2, 2, 2, 1, -1, 3, -1, 1, ],
-        #                   [1, 1, 1, -1, 3, 3, 3, -1, 3, 2, ],
-        #                   [-1, 1, 1, 2, -1, -1, 2, 1, 2, -1, ]])
-        # mine_number = 0
-        # row, column = np.shape(board)
-        # for i in range(row):
-        #     for j in range(column):
-        #         if board[i][j] == -1:
-        #             mine_number += 1
         mine = map_generator.mine_number
         sweep = sweeper.Sweeper(board, map_generator.mine_number)
         start = time.time()
@@ -54,11 +38,13 @@ if __name__ == '__main__':
         # map_generator.drawboard(board)
         # print(sweeper.sweeper_map)
         # print(board)
+        print("Progress:{}%".format(((i + 1) * 100 / 100)), flush=True)
     avg /= 100
     avg_improve /= 100
     print(str(avg) + " -> " + str(time_con))
     print(str(avg_improve) + " -> " + str(time_con_improve))
 
+<<<<<<< HEAD:Project2/main.py
 <<<<<<< HEAD
     # sweeper.draw_board()
     # map_generator = utils.MineMap()
@@ -74,23 +60,10 @@ if __name__ == '__main__':
 
 =======
     # map_generator = minemap.MineMap(x=16, y=16)
+=======
+    # map_generator = minemap.MineMap(x=25, y=25)
+>>>>>>> 923bb41100eb75e7b98435b125d5ccbe36a53898:Project2/MineSweeperBeta/main.py
     # board = map_generator.board
-    # # board = np.array([[-1, 1, 1, -1, -1, 2, 1, 1, 1, 1, ],
-    # #                   [1, 2, 2, 3, 3, -1, 1, 2, -1, 2, ],
-    # #                   [1, 2, -1, 1, 1, 1, 2, 3, -1, 2, ],
-    # #                   [-1, 2, 1, 1, 0, 0, 1, -1, 2, 1, ],
-    # #                   [1, 1, 1, 2, 2, 1, 1, 1, 1, 0, ],
-    # #                   [0, 0, 2, -1, -1, 1, 0, 0, 0, 0, ],
-    # #                   [0, 0, 2, -1, 3, 2, 1, 2, 1, 1, ],
-    # #                   [0, 0, 2, 2, 2, 1, -1, 3, -1, 1, ],
-    # #                   [1, 1, 1, -1, 3, 3, 3, -1, 3, 2, ],
-    # #                   [-1, 1, 1, 2, -1, -1, 2, 1, 2, -1, ]])
-    # # mine_number = 0
-    # # row, column = np.shape(board)
-    # # for i in range(row):
-    # #     for j in range(column):
-    # #         if board[i][j] == -1:
-    # #             mine_number += 1
     # mine = map_generator.mine_number
     # sweep = sweeper.Sweeper(board, map_generator.mine_number)
     # while sweep.flip_by_possibility():

@@ -2,8 +2,8 @@
 The basic A* algorithm, I will use a improved one in fire maze part
 """
 
-from part4.util import MyPriorityQueue
-from part4.Maze import Maze_generater
+from Part4.util import MyPriorityQueue
+from Part4.Maze import Maze_generater
 from copy import deepcopy
 
 
