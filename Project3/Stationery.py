@@ -13,8 +13,8 @@ import numpy as np
 
 class Explorer:
     def __init__(self, origin_map):
-        self.origin_map = origin_map  # origin map which contains 4 different terrain type from 0 to 3
-        self.row, self.col = np.shape(origin_map)
+        self.origin_map = origin_map.origin_map  # origin map which contains 4 different terrain type from 0 to 3
+        self.row, self.col = np.shape(self.origin_map)
         self.mappings = origin_map.mappings  # sets for different p with different terrain type
 
         self.rand = np.random.randint(0, self.row * self.col)  # rand seed
