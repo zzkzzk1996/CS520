@@ -99,4 +99,4 @@ class MovingExplorer:
             pre_grid = grid
             self.target_moving()
         # print("Search times: " + str(self.search_one_count1))
-        return self.search_count + self.search_action
+        return self.search_count + self.search_action, self.search_count

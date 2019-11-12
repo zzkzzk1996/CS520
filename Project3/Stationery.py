@@ -31,7 +31,7 @@ class Explorer:
         self.search_three_count = 0  # count for search under stationery three
         self.search_three_action = 0  # actions for search under stationery three
 
-        print("Target is" + str(self.target))
+        # print("Target is" + str(self.target))
 
     def search_one(self):  # search under stationery one
         while True:
@@ -103,7 +103,7 @@ class Explorer:
             self.p_map_s1 /= observation
             pre_grid = grid
         # print("Search times: " + str(self.search_one_count1))
-        return self.search_one_action + self.search_one_count
+        return self.search_one_action + self.search_one_count, self.search_one_count
 
     def search_two_with_actions(self):  # stationery rule two search with actions
         while True:
@@ -118,7 +118,7 @@ class Explorer:
             self.p_map_s2 /= observation
             pre_grid = grid
         # print("Search times: " + str(self.search_one_count2))
-        return self.search_two_action + self.search_two_count
+        return self.search_two_action + self.search_two_count, self.search_two_count
 
     def search_three_with_actions(self):
         grid = self.grid_choice2()
@@ -127,7 +127,7 @@ class Explorer:
             self.search_three_count += 1
             grid = self.grid_choice3(pre_grid)
             self.search_three_action += self.get_distance(grid, pre_grid)
-            print(self.search_three_action)
+            # print(self.search_three_action)
             if self.check(grid):
                 break
             else:
@@ -136,7 +136,7 @@ class Explorer:
             self.p_map_s3 /= observation
             pre_grid = grid
         # print("Search times: " + str(self.search_one_count2))
-        return self.search_three_action + self.search_three_count
+        return self.search_three_action + self.search_three_count, self.search_three_count
 
     def grid_choice3(self, pre_grid):
         arr4 = np.argwhere((self.origin_map == 3) & (self.p_map_s3 == np.max(self.p_map_s3)))
