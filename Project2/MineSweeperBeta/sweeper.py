@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 dir_arr = ([0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1])
 
 
-<<<<<<< HEAD:Project2/utils.py
 class MineMap:
     """
     class for generating mine map
@@ -82,8 +81,6 @@ class MineMap:
 # ms = MineMap(p=0.14)
 # print(ms.board)
 # ms.drawboard()
-=======
->>>>>>> 6be4fd197bec23a058ff2f8919ef82401b2be790:Project2/sweeper.py
 class Sweeper:
     """
     this class is to generate the sweeper's map and the search algorithm

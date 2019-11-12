@@ -44,8 +44,6 @@ if __name__ == '__main__':
     print(str(avg) + " -> " + str(time_con))
     print(str(avg_improve) + " -> " + str(time_con_improve))
 
-<<<<<<< HEAD:Project2/main.py
-<<<<<<< HEAD
     # sweeper.draw_board()
     # map_generator = utils.MineMap()
     # map_generator.drawboard(board)
@@ -58,11 +56,8 @@ if __name__ == '__main__':
     print(num, mine)
 
 
-=======
     # map_generator = minemap.MineMap(x=16, y=16)
-=======
     # map_generator = minemap.MineMap(x=25, y=25)
->>>>>>> 923bb41100eb75e7b98435b125d5ccbe36a53898:Project2/MineSweeperBeta/main.py
     # board = map_generator.board
     # mine = map_generator.mine_number
     # sweep = sweeper.Sweeper(board, map_generator.mine_number)
@@ -74,4 +69,3 @@ if __name__ == '__main__':
     # map_generator.drawboard(board)
     # print(sweep.sweeper_map)
     # print(board)
->>>>>>> 6be4fd197bec23a058ff2f8919ef82401b2be790
