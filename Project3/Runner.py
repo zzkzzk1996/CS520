@@ -8,6 +8,7 @@
 
 import Map
 import Stationery
+import Moving
 import csv
 
 path = "/Users/zekunzhang/2019 Fall/CS520/Assignment3"
@@ -25,7 +26,7 @@ def write_csv(info, filename):
 def test(times):
     res1, res2 = 0, 0
     for i in range(times):
-        map = Map.Map(10)
+        map = Map.Map(50)
         se = Stationery.Explorer(origin_map=map)
         res1 += se.search_one()
         res2 += se.search_two()
@@ -34,10 +35,22 @@ def test(times):
 
 
 if __name__ == '__main__':
-    for i in range(1, 1000):
-        res1, res2 = test(i)
-        info1 = [i, round(res1 / i)]
-        info2 = [i, round(res2 / i)]
-        write_csv(info1, filename1)
-        write_csv(info2, filename2)
-        print("Progress:{}%".format((i * 100 / 1000)), flush=True)
+    # for i in range(1, 1000):
+    #     res1, res2 = test(i)
+    #     info1 = [i, round(res1 / i)]
+    #     info2 = [i, round(res2 / i)]
+    #     write_csv(info1, filename1)
+    #     write_csv(info2, filename2)
+    #     print("Progress:{}%".format((i * 100 / 1000)), flush=True)
+
+    # map = Map.Map(10)
+    # se = Stationery.Explorer(origin_map=map)
+    # res = se.search_three_with_actions()
+    # print(res)
+    # compare = se.search_two_with_actions()
+    # print(compare)
+
+    map = Map.Map(10)
+    me = Moving.MovingExplorer(origin_map=map)
+    res = me.search()
+    print(res)

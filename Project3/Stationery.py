@@ -8,9 +8,6 @@
 import numpy as np
 
 
-# dir_arr = ([0, 1], [1, 0], [0, -1], [-1, 0])
-
-
 class Explorer:
     def __init__(self, origin_map):
         self.origin_map = origin_map.origin_map  # origin map which contains 4 different terrain type from 0 to 3
@@ -24,13 +21,17 @@ class Explorer:
                 self.row * self.col)  # possibility map for search under stationery one
         self.p_map_s2 = np.ones((self.row, self.col)) / (
                 self.row * self.col)  # possibility map for search under stationery two
+        self.p_map_s3 = np.ones((self.row, self.col)) / (
+                self.row * self.col)  # possibility map for search under stationery three
 
         self.search_one_count = 0  # count for search under stationery one
         self.search_one_action = 0  # actions for search under stationery one
         self.search_two_count = 0  # count for search under stationery two
         self.search_two_action = 0  # actions for search under stationery two
+        self.search_three_count = 0  # count for search under stationery three
+        self.search_three_action = 0  # actions for search under stationery three
 
-        # print("Target is" + str(self.target))
+        print("Target is" + str(self.target))
 
     def search_one(self):  # search under stationery one
         while True:
@@ -93,7 +94,7 @@ class Explorer:
         while True:
             self.search_one_count += 1
             grid = self.grid_choice1()
-            self.search_one_action += self.get_distance(grid, grid if self.search_one_action == 0 else pre_grid)
+            self.search_one_action += self.get_distance(grid, grid if self.search_one_count == 1 else pre_grid)
             if self.check(grid):
                 break
             else:
@@ -108,7 +109,7 @@ class Explorer:
         while True:
             self.search_two_count += 1
             grid = self.grid_choice2()
-            self.search_two_action += self.get_distance(grid, grid if self.search_two_action == 0 else pre_grid)
+            self.search_two_action += self.get_distance(grid, grid if self.search_two_count == 1 else pre_grid)
             if self.check(grid):
                 break
             else:
@@ -118,3 +119,39 @@ class Explorer:
             pre_grid = grid
         # print("Search times: " + str(self.search_one_count2))
         return self.search_two_action + self.search_two_count
+
+    def search_three_with_actions(self):
+        grid = self.grid_choice2()
+        pre_grid = grid
+        while True:
+            self.search_three_count += 1
+            grid = self.grid_choice3(pre_grid)
+            self.search_three_action += self.get_distance(grid, pre_grid)
+            print(self.search_three_action)
+            if self.check(grid):
+                break
+            else:
+                observation = 1 - self.p_map_s3[grid] + self.p_map_s3[grid] * self.mappings[self.origin_map[grid]]
+                self.p_map_s3[grid] *= self.mappings[self.origin_map[grid]]
+            self.p_map_s3 /= observation
+            pre_grid = grid
+        # print("Search times: " + str(self.search_one_count2))
+        return self.search_three_action + self.search_three_count
+
+    def grid_choice3(self, pre_grid):
+        arr4 = np.argwhere((self.origin_map == 3) & (self.p_map_s3 == np.max(self.p_map_s3)))
+        arr3 = np.argwhere((self.origin_map == 2) & (self.p_map_s3 == np.max(self.p_map_s3)))
+        arr2 = np.argwhere((self.origin_map == 1) & (self.p_map_s3 == np.max(self.p_map_s3)))
+        arr1 = np.argwhere((self.origin_map == 0) & (self.p_map_s3 == np.max(self.p_map_s3)))
+        if arr1.size > 0:
+            candidates = arr1
+        elif arr2.size > 0:
+            candidates = arr2
+        elif arr3.size > 0:
+            candidates = arr3
+        else:
+            candidates = arr4
+        min_grids = np.argwhere(
+            abs(candidates - pre_grid).sum(axis=1) - np.min(
+                abs(candidates - pre_grid).sum(axis=1)) < 10).flatten().tolist()
+        return tuple(candidates[np.random.choice(min_grids)])
