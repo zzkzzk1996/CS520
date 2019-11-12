@@ -27,11 +27,17 @@ class MovingExplorer:
         self.search_action = 0
 
     def target_moving(self):
+        move = list(self.dir_arr).copy()
         while True:
-            random = np.random.choice((0, 1, 2, 3))
-            self.target[0] += self.dir_arr[random][0]
-            self.target[1] += self.dir_arr[random][1]
-            if 0 <= self.target[1] < self.col and 0 <= self.target[0] < self.row: break
+            random = np.random.choice(len(move))
+            temp = [self.target[0], self.target[1]]
+            temp[0] += move[random][0]
+            temp[1] += move[random][1]
+            if 0 <= temp[1] < self.col and 0 <= temp[0] < self.row:
+                self.target = temp
+                break
+            else:
+                del move[random]
 
     def get_target_terrain(self):
         list = [0, 1, 2, 3]
@@ -40,10 +46,10 @@ class MovingExplorer:
 
     def map_update(self, terrain):
         self.p_map_temp = self.p_map.copy()
-        self.p_map_temp[self.p_map == terrain] = 0
+        # self.p_map_temp[self.origin_map == terrain] = 0
 
     def check(self, grid):  # check one grid failure or success
-        if self.target != grid:
+        if self.target != list(grid):
             return False
         else:
             random = np.random.random()  # generate a random p from 0 to 1
@@ -66,21 +72,24 @@ class MovingExplorer:
         if pre_grid is None:
             return tuple(candidates[np.random.choice(len(candidates))])
         else:
-            min_grids = np.argwhere(
-                abs(candidates - pre_grid).sum(axis=1) - np.min(
-                    abs(candidates - pre_grid).sum(axis=1)) < 10).flatten().tolist()
-            return tuple(candidates[np.random.choice(min_grids)])
+            # min_grids = np.argwhere(
+            #     abs(candidates - pre_grid).sum(axis=1) - np.min(
+            #         abs(candidates - pre_grid).sum(axis=1)) < 10).flatten().tolist()
+            min_grid = np.argmin(abs(candidates - pre_grid).sum(axis=1))
+            # return tuple(candidates[np.random.choice(min_grids)])
+            return tuple(candidates[min_grid])
 
     def get_distance(self, p, q):  # get distance between two grids
         return abs(p[0] - q[0]) + abs(p[1] - q[1])
 
     def search(self):
         while True:
+            # print(str(self.search_count) + ":" + str(self.search_action))
             self.search_count += 1
             self.tracker = self.get_target_terrain()
             self.map_update(terrain=self.tracker)
             grid = self.grid_choice(None if self.search_count == 1 else pre_grid)
-            self.search_action += self.get_distance(grid, grid if self.search_action == 0 else pre_grid)
+            self.search_action += self.get_distance(grid, grid if self.search_count == 1 else pre_grid)
             if self.check(grid):
                 break
             else:

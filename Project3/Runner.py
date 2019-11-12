@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # compare = se.search_two_with_actions()
     # print(compare)
 
-    map = Map.Map(10)
+    map = Map.Map(50)
     me = Moving.MovingExplorer(origin_map=map)
     res = me.search()
     print(res)
