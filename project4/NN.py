@@ -65,7 +65,7 @@ def im2col(image, ksize, stride):
 if __name__ == '__main__':
     train_input, train_output = np.random.randn(255, 255), np.random.randn(255, 255)
     test_input, test_output = np.random.randn(255, 255), np.random.randn(255, 255)
-    train_input = im2col(train_input, 3, 1)
-    nn = NN(input_array=train_input, output_array=train_output, lr=0.005)
-    nn.train(10000)
+    # train_input = im2col(train_input, 3, 1)
+    nn = NN(input_array=train_input, output_array=train_output, lr=1e-7)
+    nn.train(1000000)
     nn.predict(test_input, test_output)
