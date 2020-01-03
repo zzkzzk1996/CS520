@@ -29,7 +29,7 @@ class NN:
         col_weights = self.weights.reshape([-1])
         x = np.pad(x, ((self.kernel_size // 2, self.kernel_size // 2), (self.kernel_size // 2, self.kernel_size // 2)),
                    'constant', constant_values=0)
-        # col_image is the gradient of the convolutional layer
+        # col_image is the gradient of the convolutional layer, we need to do sth with it
         self.col_image = self.im2col(x, self.kernel_size, self.stride)
         conv_out = np.dot(self.col_image, col_weights)
         conv_out = np.reshape(conv_out, np.hstack(self.input_array.shape))
