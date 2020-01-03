@@ -25,7 +25,7 @@ class NN:
         self.learning_rate = lr
         self.input_array = input_array
         self.output_array = output_array
-        self.weights = self.load_model(model_path)
+        self.weights = np.random.randn(kernel_size, kernel_size)
         self.stride = 1
         self.method = method
         self.activation = activation_function

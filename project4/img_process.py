@@ -38,12 +38,12 @@ img = read_img('D:\\CS520\\project4\\imgs\\beach01.jpg')
 in_arr, out_arr, in_shape = get_train_data('D:\\CS520\\project4\\imgs\\beach01.jpg')
 
 nn_1 = NN(input_array=in_arr, output_array=out_arr[:, :, 0], kernel_size=3, method='SAME',
-          activation_function='tanh', lr=1e-12, model_path='nn_1.txt')
+          activation_function='tanh', lr=1e-10, model_path='nn_1.txt')
 nn_2 = NN(input_array=in_arr, output_array=out_arr[:, :, 1], kernel_size=3, method='SAME',
-          activation_function='tanh', lr=1e-12, model_path='nn_2.txt')
+          activation_function='tanh', lr=1e-10, model_path='nn_2.txt')
 
-nn_1.train(6000)
-nn_2.train(6000)
+nn_1.train(10)
+nn_2.train(10)
 nn_1.save_model('nn_1.txt')
 nn_2.save_model('nn_2.txt')
 y1, y2 = nn_1.predict(in_arr, out_arr[:, :, 0]) * 128, nn_2.predict(in_arr, out_arr[:, :, 1]) * 128
