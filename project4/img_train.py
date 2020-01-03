@@ -20,15 +20,18 @@ def tanh(x):
 
 class NN:
     def __init__(self, kernel_size=3, lr=1e-6, input_array=None, output_array=None, method="valid",
-                 activation_function='relu'):
+                 activation_function='relu', model_path=None):
         self.kernel_size = kernel_size
         self.learning_rate = lr
         self.input_array = input_array
         self.output_array = output_array
-        self.weights = np.random.randn(kernel_size, kernel_size)
+        self.weights = self.load_model(model_path)
         self.stride = 1
         self.method = method
         self.activation = activation_function
+
+    def load_model(self, filename):
+        return np.loadtxt(filename, delimiter=",")
 
     def im2col(self, input_img, ksize, stride):
         # input_img is a 2d tensor([width ,height])
@@ -52,7 +55,7 @@ class NN:
         # conv_out = np.reshape(conv_out, np.hstack(self.input_array.shape))
         # the output of column format
         conv_out = np.reshape(conv_out_c, np.hstack((x.shape[0] - self.kernel_size + 1,
-                                                     x.shape[0] - self.kernel_size + 1)))
+                                                     x.shape[1] - self.kernel_size + 1)))
         return conv_out, conv_out_c
 
     def back_conv(self, gradient_conv_c, conv_c):
@@ -97,24 +100,33 @@ class NN:
             self.weights = self.weights - self.learning_rate * grad_kernel
 
     def predict(self, input_vector, output_vector):
-        conv = self.forward(input_vector)
-        conv_relu = np.maximum(conv, 0)
-        loss = np.square(conv_relu - output_vector).sum()
-        print(loss)
+        conv, conv_c = self.forward(input_vector)
+        if self.activation == "relu":
+            out = relu(conv)
+        elif self.activation == "tanh":
+            out = tanh(conv)
+        elif self.activation == "sigmoid":
+            out = sigmoid(conv)
+        # loss = np.square(out - output_vector).sum()
+        # print(loss)
+        return out
+
+    def save_model(self, file_name):
+        np.savetxt(file_name, self.weights, fmt="%s", delimiter=",")
 
 
 def normalization(x):
     xmin, xmax = x.min(), x.max()
     return (x - xmin) / (xmax - xmin)
 
-
-if __name__ == '__main__':
-    train_input, train_output = np.random.randn(255, 255), np.random.randn(255, 255)
-    norm_in, norm_out = normalization(train_input), normalization(train_output)
-    # train_input, train_output = np.random.randint(0, 255, (3, 3)), np.random.randint(0, 255, (2, 2))
-    # nn = NN(input_array=train_input, output_array=train_output, kernel_size=2)
-    # nn = NN(input_array=train_input, output_array=train_output, kernel_size=3, method='SAME', lr=1e-7)
-    nn = NN(input_array=norm_in, output_array=norm_out, kernel_size=3, method='SAME', activation_function='tanh', lr=1e-7)
-    # nn = NN(input_array=train_input, output_array=train_output, kernel_size=3, method='SAME',activation_function='sigmoid', lr=1e-11)
-    nn.train(200)
-    nn.predict(train_input, train_output)
+# if __name__ == '__main__':
+#     train_input, train_output = np.random.randn(255, 255), np.random.randn(255, 255)
+#     norm_in, norm_out = normalization(train_input), normalization(train_output)
+#     # train_input, train_output = np.random.randint(0, 255, (3, 3)), np.random.randint(0, 255, (2, 2))
+#     # nn = NN(input_array=train_input, output_array=train_output, kernel_size=2)
+#     # nn = NN(input_array=train_input, output_array=train_output, kernel_size=3, method='SAME', lr=1e-7)
+#     nn = NN(input_array=norm_in, output_array=norm_out, kernel_size=3, method='SAME', activation_function='tanh', lr=1e-7)
+#     # nn = NN(input_array=train_input, output_array=train_output, kernel_size=3, method='SAME',activation_function='sigmoid', lr=1e-11)
+#     nn.train(200)
+#     nn.predict(train_input, train_output)
+print(np.random.randn(3, 3))
